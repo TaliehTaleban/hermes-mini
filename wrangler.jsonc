@@ -1,0 +1,52 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "hermes-mini",
+	"main": "src/index.js",
+	"compatibility_date": "2026-11-02",
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true,
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "hermes-mini-db",
+			"database_id": "c5872ad3-56bb-477e-8a33-e391b772933c",
+			"migrations_dir": "migrations"
+		}
+	],
+	"vars": {
+		"DEFAULT_TIMEZONE": "Asia/Tehran",
+		"LLM_API_BASE": "https://generativelanguage.googleapis.com/v1beta/openai",
+		"LLM_MODEL": "gemini-3.8-flash",
+		"LLM_MODEL_FALLBACKS": "gemini-3.6-flash,gemini-3.5-flash-lite"
+	},
+	"triggers": {
+		"crons": [
+			"* * * * *",
+			"30 2 * * *"
+		]
+	},
+	"env": {
+		"test": {
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "hermes-mini-db",
+					"database_id": "c5872ad3-56bb-477e-8a33-e391b772933c",
+					"migrations_dir": "migrations"
+				}
+			],
+			"vars": {
+				"DEFAULT_TIMEZONE": "Asia/Tehran",
+				"LLM_API_BASE": "https://generativelanguage.googleapis.com/v1beta/openai",
+				"LLM_MODEL": "gemini-3.8-flash",
+				"LLM_MODEL_FALLBACKS": "gemini-3.6-flash,gemini-3.5-flash-lite"
+			}
+		}
+	}
+}
